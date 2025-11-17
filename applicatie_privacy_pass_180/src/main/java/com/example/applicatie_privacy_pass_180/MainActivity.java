@@ -18,23 +18,23 @@ public class MainActivity extends AppCompatActivity {
         //  ️UI-elementen koppelen aan de variabelen
         TextView tv = findViewById(R.id.tvStatus);
 
-        // Knop koppelen aan de HTTPS-testfunctie
+        // Knop koppelen aan de HTTPS testfunctie
         findViewById(R.id.btnTest).setOnClickListener(v -> testHttps(tv));
     }
 
     /**
      * testHttps()
-     * Probeert een echte HTTPS-verbinding te maken.
+     * Probeert een echte HTTPS verbinding te maken.
      * In deze app is "android:usesCleartextTraffic" op FALSE gezet,
-     * waardoor enkel beveiligde (versleutelde) HTTPS-verbindingen zijn toegestaan.
+     * waardoor enkel beveiligde (versleutelde) HTTPS verbindingen zijn toegestaan.
      */
     private void testHttps(TextView tv) {
-        tv.setText("HTTPS-verbinding testen...");
+        tv.setText("HTTPS verbinding testen...");
 
         new Thread(() -> {
             boolean success = false;
             try {
-                // Maak een veilige HTTPS-verbinding met dezelfde webhook-site
+                // Maak een veilige HTTPS verbinding met dezelfde webhook site
                 // De verbinding is versleuteld via TLS.
                 HttpURLConnection conn = (HttpURLConnection)
                         new URL("https://webhook.site/1557ddd3-4f07-41c6-a225-60ce6abe178f").openConnection();
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 conn.setConnectTimeout(5000);
                 conn.setReadTimeout(5000);
 
-                // Verstuur de HTTPS-request en controleer de statuscode
+                // Verstuur de HTTPS request en controleer de statuscode
                 success = conn.getResponseCode() < 400;
 
                 conn.disconnect();
@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 // Kleur en tekst aanpassen afhankelijk van resultaat
-                // Groen = HTTPS werkt → veilig verkeer toegestaan
-                // Rood = mislukt → er is een probleem met de veilige verbinding
+                // Groen = HTTPS werkt > veilig verkeer toegestaan
+                // Rood = mislukt > er is een probleem met de veilige verbinding
                 int color = ok ? Color.parseColor("#4CAF50") : Color.parseColor("#FF4C4C");
                 String msg = ok
-                        ? "HTTPS gelukt → veilig verkeer toegestaan"
-                        : "HTTPS mislukt → verbinding mislukt";
+                        ? "HTTPS gelukt > veilig verkeer toegestaan"
+                        : "HTTPS mislukt > verbinding mislukt";
 
                 tv.setBackgroundColor(color);
                 tv.setText(msg);
